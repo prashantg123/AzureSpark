@@ -3,7 +3,7 @@ version: '3'
 services:
   spark-master:
     build:
-      context:
+      context: .
       dockerfile: Dockerfile.spark
     command: bin/spark-class org.apache.spark.deploy.master.Master
     volumes:
@@ -15,11 +15,11 @@ services:
       - "9090:8080"
       - "7077:7077"
     networks:
-      - prashant-network
+      - code-with-yu
 
   spark-worker: &worker
     build:
-      context:
+      context: .
       dockerfile: Dockerfile.spark
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
@@ -35,16 +35,16 @@ services:
       SPARK_WORKER_MEMORY: 1g
       SPARK_MASTER_URL: spark://spark-master:7077
     networks:
-      - prashant_network
+      - code-with-yu
 
   spark-worker-2:
     <<: *worker
-  
+
   spark-worker-3:
     <<: *worker
-  
+
   spark-worker-4:
     <<: *worker
 
 networks:
-      - prashant_network
+  code-with-yu:
